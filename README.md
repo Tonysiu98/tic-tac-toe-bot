@@ -1,9 +1,14 @@
 # tic-tac-toe-bot
-This is a mini project for developing a tic-tac-toe discord bot
-In the spirit of: https://github.com/CodingTrain/website/tree/main/CodingChallenges/CC_154_Tic_Tac_Toe_Minimax/P5
+This is a mini project for developing a tic-tac-toe discord bot hosting on Heroku 
 
-The bot is implemented with a minimax algorithm
+## Features
+- A minimax algorithm for bot moves
+- Allowing multiple players using a dictionary
 
 ## List of improvement
 - [ ] improve UI
-- [ ] writing tests for github action
+- [ ] Develop a two player mode
+
+### references
+https://github.com/CodingTrain/website/tree/main/CodingChallenges/CC_154_Tic_Tac_Toe_Minimax/P5 \
+https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-3-tic-tac-toe-ai-finding-optimal-move/
