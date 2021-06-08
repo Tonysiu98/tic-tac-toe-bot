@@ -4,6 +4,7 @@ from math import inf
 # Initialise the board 
 # board[row][col]
 board = [[' ' for j in range (3)] for i in range(3)]
+
 free_pos = 9
 
 # Initialise Game info
@@ -35,8 +36,7 @@ def wins(board, player):
         return True
     return False
      
-def ties():
-    global board
+def ties(board):
     for i in range(3):  
         for j in range(3):
             if board[i][j] == ' ':
@@ -45,7 +45,7 @@ def ties():
 
 # Maybe rewrite to return the player
 def game_over(board):
-    if wins(board, 'x') or wins(board, 'o') or ties():
+    if wins(board, 'x') or wins(board, 'o') or ties(board):
         return True
     return False
 
@@ -54,6 +54,7 @@ async def print_board(ctx):
     await ctx.send("{}  |  {}  |  {}\n {}  |  {}  |  {}\n {}  |  {}  |  {}"
         .format(board[0][0], board[0][1], board[0][2],board[1][0], board[1][1], board[1][2],board[2][0], board[2][1], board[2][2]))
 
+# TODO: should rewrite this to avoid global
 def reset_game():
     global board, free_pos, current_player
     board = [[' ' for j in range (3)] for i in range(3)]
@@ -180,7 +181,7 @@ async def update_board(ctx, x, y):
             await ctx.send("Bot won")
             reset_game()
 
-    if ties():
+    if ties(board):
         #await print_board(ctx)
         await ctx.send("game ties won")
         reset_game()
