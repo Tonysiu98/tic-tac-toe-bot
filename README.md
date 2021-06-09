@@ -2,11 +2,10 @@
 This is a mini project for developing a tic-tac-toe discord bot hosting on Heroku 
 
 ## Features
-- A minimax algorithm for bot moves
+- A minimax algorithm for bot moves (with alpha-beta pruning for speeding up the search)
 - Allowing multiple players using a dictionary
 
 ## List of improvement
-- [ ] improve UI
 - [ ] Develop a two player mode
 
 ### references
