@@ -34,8 +34,8 @@ bot = commands.Bot(command_prefix='$')
 @bot.command()
 async def start(ctx):
     if ctx.author.name in game_map:
-        await ctx.send("You have a game already")
-        await print_board(ctx, board)
+        await ctx.send("You have a game already ! <@{}>".format(ctx.author.id))
+        await print_board(ctx, game_map[ctx.author.name])
     else:
         # Show game
         board, depth = init_game()
