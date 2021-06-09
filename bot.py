@@ -6,9 +6,27 @@ token = os.environ['TOKEN']
 
 game_map = {}
 
-async def print_board(ctx,board):
-    await ctx.send("{}  |  {}  |  {}\n {}  |  {}  |  {}\n {}  |  {}  |  {}"
-        .format(board[0][0], board[0][1], board[0][2],board[1][0], board[1][1], board[1][2],board[2][0], board[2][1], board[2][2]))
+async def print_board(ctx, board):
+    response = """ ```
+    $ # # # $ # # # $ # # # $
+    #       #       #       #
+    #   {}   #   {}   #   {}   #
+    #       #       #       #
+    $ # # # $ # # # $ # # # $ 
+    #       #       #       #
+    #   {}   #   {}   #   {}   #
+    #       #       #       #
+    $ # # # $ # # # $ # # # $ 
+    #       #       #       #
+    #   {}   #   {}   #   {}   #
+    #       #       #       #
+    $ # # # $ # # # $ # # # $ 
+
+    ```
+    """.format(board[0][0], board[0][1], board[0][2], 
+                board[1][0], board[1][1], board[1][2], 
+                board[2][0], board[2][1], board[2][2])
+    await ctx.send(response)
 
 # Basic bot set up
 bot = commands.Bot(command_prefix='$')
@@ -17,7 +35,7 @@ bot = commands.Bot(command_prefix='$')
 async def start(ctx):
     if ctx.author.name in game_map:
         await ctx.send("You have a game already")
-        # Show game
+        await print_board(ctx, board)
     else:
         # Show game
         board, depth = init_game()
@@ -61,4 +79,6 @@ async def reset(ctx):
         game_map.pop(ctx.author.name)
         await ctx.send("The game has been reset!")
 
+
 bot.run(token)
+
