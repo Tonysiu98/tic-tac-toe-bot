@@ -45,16 +45,17 @@ def game_over(board):
     return False
 
 # Minimax Collection
-def score_evaluation(board):
+# adding depth to score allows it to find the optimal move on any given board
+def score_evaluation(board, depth):
     if wins(board, 'o'):
-        return  1
+        return  1 + depth
     elif wins(board, 'x'):
-        return -1
-    elif ties(board):
+        return -1 - depth
+    else:
         return 0
 
-
-def minimax(board, depth, isMax):
+# Minimax with alpha beta
+def minimax(board, depth, alpha, beta, isMax):
     # Score is in the form of [pos_x, pos_y, score]
     if isMax :
         bestScore = [-1, -1, -inf]
@@ -62,22 +63,31 @@ def minimax(board, depth, isMax):
         bestScore = [-1, -1, inf]
 
     if game_over(board) or depth == 0:
-        score = score_evaluation(board)
+        score = score_evaluation(board, depth)
         return [-1, -1, score]
 
     for i in range(3):
         for j in range(3):
             if (board[i][j] == ' '):
                 board[i][j] = 'o' if isMax else 'x'
-                score = minimax(board, depth-1, not isMax)
+                score = minimax(board, depth-1, alpha, beta, not isMax)
                 board[i][j] = ' '
                 score[0], score[1] = i, j
                 if isMax:
                     if score[2] > bestScore[2]:
                         bestScore = score
+                    if bestScore[2] >= beta:
+                        return bestScore
+                    if bestScore[2] > alpha:
+                        alpha = bestScore[2]
                 else:
                     if score[2] < bestScore[2]:
                         bestScore = score
+                    if bestScore[2] <= alpha:
+                        return bestScore
+                    if bestScore[2] < beta:
+                        beta = bestScore[2]
+                
     #print([board,depth,isMax,bestScore])
     return bestScore
 
@@ -94,7 +104,7 @@ def update_board(board, depth, x, y):
     if wins(board, "x"):
         return [board, depth, 'x']
 
-    bot_move = minimax(board, depth, True)
+    bot_move = minimax(board, depth, -inf, inf, True)
 
     if bot_move[0] != -1:
         board[bot_move[0]][bot_move[1]] = 'o'

@@ -1,4 +1,5 @@
 from game_lib import init_game, game_over, input_check, update_board, wins, ties, score_evaluation, minimax
+from math import inf
 
 def test_init_game():
     board, depth = init_game()
@@ -80,26 +81,26 @@ def test_game_over_false():
 def test_score_evaluation_bot():
     board = [[' ' for j in range (3)] for i in range(3)]
     board[0][0] = board[1][1] = board[2][2] = 'o'
-    result = score_evaluation(board)
-    assert result == 1
+    result = score_evaluation(board, 6)
+    assert result == 7
 
 def test_score_evaluation_player():
     board = [[' ' for j in range (3)] for i in range(3)]
     board[0][0] = board[1][1] = board[2][2] = 'x'
-    result = score_evaluation(board)
-    assert result == -1
+    result = score_evaluation(board, 6)
+    assert result == -7
 
 def test_score_evaluation_tie():
     board = [[' ' for j in range (3)] for i in range(3)]
     board[0][0] = board[1][1] = board[2][1] = board[1][2] = 'x'
     board[0][1] = board[0][2] = board[1][0] = board[2][0] = board[2][2] = 'o'
-    result = score_evaluation(board)
+    result = score_evaluation(board, 0)
     assert result == 0
 
 def test_minimax():
     board = [[' ' for j in range (3)] for i in range(3)]
     board[0][0] = 'x'
-    result = minimax(board, 8, True)
+    result = minimax(board, 8, -inf, inf, True)
     assert result[0] == 1
     assert result[1] == 1
 
